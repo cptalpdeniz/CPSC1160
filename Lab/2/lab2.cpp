@@ -1,15 +1,18 @@
 #include <iostream>
+#include <string>
 #include "functions.h"
 
 int main()
 {
+	std::string str;
 	int k;
 	do
 	{
 		std::cin.clear();
 		std::cout << "Please write a positive integer number: ";
-		std::cin >> k;
-	} while (k < 0 && k > 12);
+		std::cin >> str;
+		k = strToInt(str);
+	} while (k < 0 || k > 12 || !std::cin);
 	int n = 1;
 	std::cout << std::fixed;
 	std::cout.precision(7);
