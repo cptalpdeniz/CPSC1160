@@ -12,7 +12,7 @@
 int main()
 {
 	std::string str;
-	int k;
+	int k; 
 	
 	do
 	{
@@ -28,7 +28,9 @@ int main()
 	
 	while (k <= 12 && n <= k)
 	{
-		std::cout << n << "\t" << prob(n, k) * 100 << std::endl;
+		std::cout.width(20);
+		std::cout << std::left << n;
+		std::cout << std::right << prob(n, k) * 100 << std::endl;
 		n++;
 	}
 	
