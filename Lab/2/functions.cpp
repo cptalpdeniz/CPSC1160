@@ -27,7 +27,7 @@ double prob(int n, int k)
 	return (1 - (fact(k)/(std::pow(k, n)*fact(k-n))));
 }
 
-//I could have used stoi however i wanted to have full control over whats returned and whats not so I wrote my own function.
+//I could have just used stoi however i wanted to have full control over whats returned and whats not so I wrote my own wrapper.
 int strToInt(std::string str) //-1 means conversion failed.
 {
 	if (str.empty() || str[0] == '\0' || str[0] == '-' || str.length() > 2)
