@@ -1,3 +1,10 @@
+/*
+* Assignment 3
+* @author Alp Deniz Senyurt
+* Student ID: 100342433
+* Self explanatory variables and parameters will not be commented as they are, "self-explanatory".
+*/
+
 #include <iostream>
 #include <cmath>
 
@@ -65,6 +72,6 @@ int main()
 	*max = std::nan("");
 
 	double mean = calculateMean(arr, n);
-	std::cout << "\n\nThe mean is : " << mean;
+	std::cout << "\n\nThe mean is : " << mean << std::endl;
 
 }
