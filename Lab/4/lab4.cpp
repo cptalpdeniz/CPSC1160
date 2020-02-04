@@ -1,3 +1,10 @@
+/*
+* Assignment 4
+* Author Alp Deniz Senyurt
+* Student ID: 100342433
+* NOTE: Self explanatory variables and parameters will not be commented as they are, "self-explanatory".
+*/
+
 #include <iostream>
 
 bool can_reach(int start_c, int start_r, int finish_c, int finish_r, int num_moves)
@@ -44,5 +51,4 @@ int main()
 	}
 
 	can_reach(tempArr[0], tempArr[1], tempArr[2], tempArr[3], tempArr[4]) ? std::cout << "The given poisition is indeed reachable in given # of moves" << std::endl : std::cout << "The given position is NOT reachable in given # of moves" << std::endl;
-
 }
