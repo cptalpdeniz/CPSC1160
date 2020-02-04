@@ -6,6 +6,8 @@ bool can_reach(int start_c, int start_r, int finish_c, int finish_r, int num_mov
 		return false;
 	if (num_moves == 0 && (start_c == finish_c && start_r == finish_r))
 		return true;
+	if (! num_moves)
+		return num_moves;
 	if (can_reach(start_c + 2, start_r + 1, finish_r, finish_c, num_moves - 1))
 		return true;
 	else if (can_reach(start_c + 2, start_r - 1, finish_r, finish_c, num_moves - 1))
@@ -36,11 +38,11 @@ int main()
 		std::cin >> tempArr[i];
 		if (!std::cin)
 		{
-			std::cout << "Please restart this program as you entered invalid value" << std::endl; 
+			std::cout << "Please restart this program as you entered invalid value" << std::endl;
 			std::exit(0);
 		}
 	}
 
-	can_reach(tempArr[0], tempArr[1], tempArr[2], tempArr[3], tempArr[4]) ? std::cout << "The given poisition is indeed reachable in given # of moves" << std::endl : std::cout << "The given position is NOT reachable in given # of moves" << std::endl ;
+	can_reach(tempArr[0], tempArr[1], tempArr[2], tempArr[3], tempArr[4]) ? std::cout << "The given poisition is indeed reachable in given # of moves" << std::endl : std::cout << "The given position is NOT reachable in given # of moves" << std::endl;
 
 }
