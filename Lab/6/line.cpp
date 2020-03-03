@@ -5,7 +5,6 @@
 * Self explanatory variables and parameters will not be commented as they are, "self-explanatory".
 */
 
-
 #include "point.h"
 #include "line.h"
 #include <cmath>
@@ -27,8 +26,9 @@ Point Line::intersect_with(Line const line) const
 	double m1 = slope();
 	double m2 = line.slope();
 	Point p;
-	if (std::isnan(m1) && std::isnan(m2))
+	if (m1 == m2)
 	{
+		// For some reason when both coordinates are "nan", main program doesn't print nan. Instead it prints the minimum value of a signed int. This might be caused by the data stored in "Point" struct in int type.
 		p.x = std::nan("");
 		p.y = std::nan("");
 		return p;
@@ -57,6 +57,7 @@ Point Line::intersect_with(Line const line) const
 	}
 }
 
+//this is just for testing and practising operator overloading of <<
 std::ostream &operator<<(std::ostream &out, const Line &line)
 {
 	out << "Line passing through points: (" << line.point1.x << ", " << line.point1.y << ") and (" << line.point2.x << ", " << line.point2.y << ")";
