@@ -57,7 +57,6 @@ int main()
 	std::cout << "Intersect between Line 2 and 3: (" <<  p.x << ", " << p.y << ")" << std::endl;
 
 	// [INTERSECT] Test case 3
-	// Fix the case for both lines are parallel
 	p = lineArr[2].intersect_with(lineArr[3]);
 	std::cout << "Intersect between Line 3 and 4: (" <<  p.x << ", " << p.y << ")" << std::endl;
 }

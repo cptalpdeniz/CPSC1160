@@ -18,7 +18,7 @@ Line::Line()
 
 double Line::slope() const
 {
-	return (point1.x == point2.x) ? std::nan("") : (static_cast<double>(point2.y) - point1.y) / (static_cast<double>(point2.x) - point1.x);
+	return (point1.x == point2.x) ? std::nan("") : (point2.y - point1.y) / (point2.x - point1.x);
 }
 
 Point Line::intersect_with(Line const line) const
@@ -28,7 +28,6 @@ Point Line::intersect_with(Line const line) const
 	Point p;
 	if (m1 == m2)
 	{
-		// For some reason when both coordinates are "nan", main program doesn't print nan. Instead it prints the minimum value of a signed int. This might be caused by the data stored in "Point" struct in int type.
 		p.x = std::nan("");
 		p.y = std::nan("");
 		return p;

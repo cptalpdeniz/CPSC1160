@@ -9,7 +9,7 @@
 #define POINT_H
 
 struct Point {
-	int x, y;	
+	double x, y;	
 };
 
 #endif
