@@ -5,6 +5,8 @@
 * Self explanatory variables and parameters will not be commented as they are, "self-explanatory".
 */
 
+// use define for testing purposes
+
 #include <iostream>
 #include "line.h"
 #include "point.h"
