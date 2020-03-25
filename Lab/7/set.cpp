@@ -126,7 +126,7 @@ set &set::operator*=(set const &s)
 {
 	for (int i = 0; i < num_elems; ++i)
 	{
-		if (!(elems[i] && s.elems[i]))
+		if (!(elems[i] &&  s.elems[i]))
 			elems[i] = false;
 	}
 	return *this;
