@@ -1,3 +1,10 @@
+/*
+* Assignment 8
+* Author: Alp Deniz Senyurt
+* Student ID: 100342433
+* Self explanatory variables and parameters will not be commented as they are, "self-explanatory".
+*/
+
 #ifndef LIST_STACK_H
 #define LIST_STACK_H 
 
@@ -21,7 +28,7 @@ class list_stack
 	node* tail;
 public:
 	list_stack() : head(nullptr), tail(head) { }
-	
+
 	~list_stack();
 	list_stack(const list_stack&);
 	list_stack& operator=(const list_stack &);
