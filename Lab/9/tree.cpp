@@ -86,8 +86,8 @@ template<class T> Node<T>* Node<T>::operator-=(const T d)
 	}
 	else if (d == data && left && right)
 	{
-		Node<T> *temp;
-		if ((d - this->left->data) < (this->right->data - d))
+		Node<T> *temp = this;
+		if ((d - temp->left->data) < (temp->right->data - d))
 		{
 			temp = findMaxNode(temp->left);
 			data = temp->data;
@@ -106,6 +106,21 @@ template<class T> Node<T>* Node<T>::operator-=(const T d)
 	}
 }
 
+template <class T> T Node<T>::biggest() const
+{
+	const Node<T> *temp = this;
+	T max = temp->data;
+	while (temp->right)
+	{
+		temp = temp->right;
+	}
+	return (temp->data);
+}
+
+
+/*
+	Tree implementation
+*/
 
 template <class T> tree<T> &tree<T>::operator+=(const T d)
 {
@@ -236,13 +251,7 @@ template <class T> tree<T> &tree<T>::operator-=(const T d)
 
 template <class T> T tree<T>::biggest() const
 {
-	Node<T> *temp = root;
-	T max = root->data;
-	while (temp->right)
-	{
-		temp = temp->right;
-	}
-	return temp->data;
+	return root->biggest();
 }
 
 template class Node<long long>;

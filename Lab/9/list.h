@@ -9,9 +9,12 @@ public:
 	node(T data = 0, node<T>* p = nullptr, node<T>* n = nullptr) : data(data), previous(p), next(n) { }
 	~node() { delete previous; delete next; }
 
-	//still can't understand why we need these in linked list?
 	node(node<T> const &);
 	node<T> &operator=(node const &);
+	node<T> &operator+=(const T);
+	node<T> &operator-=(const T);
+
+	T biggest();
 };
 
 template <class T> class list
@@ -23,8 +26,8 @@ public:
 	list() : head(nullptr), tail(nullptr) { }
 	
 	~list() { delete head; delete tail; }
-	list(const list&);
-	list &operator=(const list &);
+	list(const list<T> &);
+	list &operator=(const list<T> &);
 
 	list &operator+=(const T);
 	list &operator-=(const T);

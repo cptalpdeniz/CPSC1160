@@ -16,6 +16,8 @@ public:
 
 	Node<T> &operator+=(const T);
 	Node<T> *operator-=(const T);
+	
+	T biggest() const;
 };
 
 template <class T> class tree
@@ -26,7 +28,7 @@ public:
 
 	~tree() { delete root; }
 	tree(const tree& t) : root(t.root) { }
-	tree &operator=(const tree &t) { delete root; root = new Node<T>(*t.root); }
+	tree &operator=(const tree &t) { delete root; root = new Node<T>(*t.root); return (*this); }
 
 	tree &operator+=(const T);
 	tree &operator-=(const T);

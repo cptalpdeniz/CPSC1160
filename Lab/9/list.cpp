@@ -11,48 +11,15 @@ template <class T> node<T> &node<T>::operator=(node const &n)
 	return (*this);
 }
 
-
-template <class T> list<T>::list(const list& l)
+template<class T> node<T>& node<T>::operator+=(const T d)
 {
-	(*this) = l;
+	this->next = new node<T>(d, this, nullptr);
+	return (*this->next);
 }
 
-template <class T> list<T>& list<T>::operator=(const list &l)
+template<class T> node<T>& node<T>::operator-=(const T d)
 {
-	node<T> *temp = l.head;
-	delete head;
-	head = new node<T>(temp->data, nullptr, nullptr);
-	tail = head;
-	temp = temp->next;
-	while (temp)
-	{
-		tail->next = new node<T>(temp->data, nullptr, tail);
-		tail = tail->next;
-		temp = temp->next;
-	}
-	return (*this);
-}
-
-template <class T> list<T>& list<T>::operator+=(const T d)
-{
-	if (!tail)
-	{
-		head = new node<T>(d, nullptr, nullptr);
-		tail = head;
-	}
-	else
-	{
-		tail->next = new node<T>(d, tail, nullptr);
-		tail = tail->next;
-	}
-	return (*this);
-}
-
-//Note for self
-//set the next to nullptr then delete so rest of the list doesn't get deleted
-template <class T> list<T>& list<T>::operator-=(const T d)
-{
-	node<T>* temp = head;
+	node<T>* temp = this;
 	while (temp)
 	{
 		if (temp->data == d)
@@ -70,23 +37,55 @@ template <class T> list<T>& list<T>::operator-=(const T d)
 	return (*this);
 }
 
-template <class T> T list<T>::biggest() const
+template <class T> T node<T>::biggest()
 {
-	if (!head)
-		return 0;
+	if (!next)
+		return biggest();
+	T var = next->biggest();
+	return (data < var) ? data : var;
+}
+
+// LIST implementation
+
+template <class T> list<T>::list(const list& l)
+{
+	(*this) = l;
+}
+
+template <class T> list<T> &list<T>::operator=(const list<T> &l)
+{ 
+	delete head; 
+	delete tail; 
+	head = new node<T>(*l.head); 
+	tail = head; 
+	return (*this); 
+}
+
+template <class T> list<T>& list<T>::operator+=(const T d)
+{
+	if (!tail)
+	{
+		head = new node<T>(d, nullptr, nullptr);
+		tail = head;
+	}
 	else
 	{
-		node<T>* temp = head;
-		T max = temp->data;
-		while(temp->next)
-		{
-			if (temp->data > max)
-				max = temp->data;
-			else
-				temp = temp->next;
-		}
-		return max;
+		tail = tail += d;
 	}
+	return (*this);
+}
+
+//Note for self
+//set the next to nullptr then delete so rest of the list doesn't get deleted
+template <class T> list<T>& list<T>::operator-=(const T d)
+{
+	head = head -= d;
+	return (*this);
+}
+
+template <class T> T list<T>::biggest() const
+{
+	return head->biggest();
 }
 
 template class node<long long>;
