@@ -1,3 +1,10 @@
+/*
+* Assignment 8
+* Author: Alp Deniz Senyurt
+* Student ID: 100342433
+* Self explanatory variables and parameters will not be commented as they are, "self-explanatory".
+*/
+
 #include "list-stack.h"
 #include <string>
 
@@ -46,7 +53,7 @@ char list_stack::pop()
 	char tempC;
 	if (tail->previous == nullptr)
 	{
-		char tempC = tail->data;
+		tempC = tail->data;
 		delete tail;
 		head = tail = nullptr;
 	}

@@ -1,3 +1,10 @@
+/*
+* Assignment 8
+* Author: Alp Deniz Senyurt
+* Student ID: 100342433
+* Self explanatory variables and parameters will not be commented as they are, "self-explanatory".
+*/
+
 #include <iostream>
 #include <string>
 #include "vector-stack.h"
@@ -14,18 +21,20 @@ template <class STACK> bool is_matched(std::string s)
 		}
 		else if (c == ')' || c == '}' || c == ']')
 		{
+			if (stack.is_empty())
+				return false;
 			char t = stack.pop();
-			switch(c)
+			switch (c)
 			{
-				case ')' :	if (t != '(')
+				case ')':	if (t != '(')
 								return false;
 							break;
-				case '}' :	if (t != '{')
+				case '}':	if (t != '{')
 								return false;
 							break;
-				case ']' :	if (t != '[')
+				case ']':	if (t != '[')
 								return false;
-							break;	 
+							break;
 			}
 		}
 		else
@@ -48,4 +57,11 @@ int main()
 	std::cout << is_matched<list_stack>("([][)]") << std::endl;
 	std::cout << is_matched<list_stack>("(((){})") << std::endl;
 
+	std::string s;
+	std::cout << "\nIf you would like to test your own input, please write a bracket string: ";
+	std::cin >> s;
+	
+	std::cout << is_matched<list_stack>(s) << std::endl;
+	std::cout << is_matched<vector_stack>(s) << std::endl;
+	
 }
