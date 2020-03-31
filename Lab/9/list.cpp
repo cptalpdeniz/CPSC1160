@@ -39,10 +39,13 @@ template<class T> node<T>& node<T>::operator-=(const T d)
 
 template <class T> T node<T>::biggest()
 {
-	if (!next)
-		return biggest();
-	T var = next->biggest();
-	return (data < var) ? data : var;
+	if (!(next)
+		return data;
+	else
+	{
+		T var = next->biggest();
+		return (data < var) ? data : var;
+	}
 }
 
 // LIST implementation
