@@ -89,3 +89,4 @@ template <class T> T list<T>::biggest() const
 }
 
 template class node<long long>;
+template class list<long long>;

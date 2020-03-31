@@ -1,35 +1,34 @@
-#ifndef TREE_H
-#define TREE_H 
+#ifndef tree_H
+#define tree_H 
 
-template <class T> class Node
+template <class T> class node
 {
 	T data;
-	Node<T> *left, *right;
+	node<T> *left, *right;
+	node<T> *findMaxnode(const node<T> &) const;
+	node<T> *findMinnode(const node<T> &) const;
 public:
-	Node(T data = 0, Node<T>* l = nullptr, Node<T>* r = nullptr) : data(data), left(l), right(r) { }
+	node(T data = 0, node<T>* l = nullptr, node<T>* r = nullptr) : data(data), left(l), right(r) { }
 
-	~Node() { delete left; delete right; }
-	Node(Node<T> const &);
-	Node<T> &operator=(Node const &);
-	Node<T> &operator+=(const T);
-	Node<T> m_delete(const Node<T> &, const T);
+	~node() { delete left; delete right; }
+	node(node<T> const &);
+	node<T> &operator=(node const &);
+	node<T> &operator+=(const T);
+	node<T> *operator-=(const T);
 };
 
-template <class T> class Tree
+template <class T> class tree
 {
-	Node<T> *root;
-	Node<T> *findMaxNode(const Node<T> &) const;
-	Node<T> *findMinNode(const Node<T> &) const;
-	Node<T> m_delete(const Node<T> &, const T);
+	node<T> *root;
 public:
-	Tree() : root(nullptr) { }
+	tree() : root(nullptr) { }
 
-	~Tree() { delete root; }
-	Tree(const Tree& t) : root(t.root) { }
-	Tree &operator=(const Tree &t) { delete root; root = new Node<T>(*t.root); }
+	~tree() { delete root; }
+	tree(const tree& t) : root(t.root) { }
+	tree &operator=(const tree &t) { delete root; root = new node<T>(*t.root); }
 
-	Tree &operator+=(const T);
-	Tree &operator-=(const T);
+	tree &operator+=(const T);
+	tree &operator-=(const T);
 
 	T biggest() const;
 };

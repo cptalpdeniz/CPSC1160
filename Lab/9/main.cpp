@@ -1,5 +1,5 @@
 #include "list.h"	// you should make a List.h for a linked-List implementation
-#include "tree.h"	// you should make a Tree.h for a BST implementation
+#include "tree.h"	// you should make a tree.h for a BST implementation
 #include <iostream>
 #include <chrono>
 
@@ -36,8 +36,8 @@ template <class T> static void time_data_structure()
 
 int main()
 {
-	std::cout << "Tree: ";
-	time_data_structure<Tree<long long>>();
+	std::cout << "tree: ";
+	time_data_structure<tree<long long>>();
 	std::cout << "List: ";
 	time_data_structure<list<long long>>();
 	return 0;

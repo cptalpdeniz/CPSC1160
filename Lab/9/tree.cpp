@@ -1,52 +1,24 @@
 #include "tree.h"
 
-template <class T> Node<T>::Node(Node<T> const &n) : data(n.data) 
+template <class T> node<T>::node(node<T> const &n) : data(n.data) 
 	{
-		left = n.left ? new	Node(*n.left) : nullptr;
-		right = n.right ? new Node(*n.right) : nullptr;
+		left = n.left ? new	node(*n.left) : nullptr;
+		right = n.right ? new node(*n.right) : nullptr;
 	}
 
-template <class T> Node<T> &Node<T>::operator=(Node const &n) 
-{
-	delete left;
-	delete right;
-	data = n.data;
-	left = n.left ? new Node(*n.left) : nullptr;
-	right = n.right ? new Node(*n.right) : nullptr;
-	return (*this);
-}
-
-template <class T> Node<T> &Node<T>::operator+=(const T value)
-{
-	Node<T> **side = value < data ? &left: &right;
-	if (*side)
-		**side += value;
-	else
-		*side = new Node<T>(value);
-	return (*this);
-}
-
-template <class T> Tree<T> &Tree<T>::operator+=(const T value)
-{
-	if (root)
-		*root += value;
-	else
-		root = new Node<T>(value);
-	return (*this);
-}
-
-//find the minimum value in the subTree
-template <class T> Node<T>* Tree<T>::findMinNode(const Node<T> &node) const
+//find the minimum value in the subtree
+template <class T> node<T>* node<T>::findMinnode(const node<T> &node) const
 {
 	T max = node->data;
 	while (node->left)
 	{
 		node = node->left;
 	}
-	return node ;
+	return node;
 }
 
-template <class T> Node<T>* Tree<T>::findMaxNode(const Node<T> &node) const
+//find the maximum value in the subtree
+template <class T> node<T>* node<T>::findMaxnode(const node<T> &node) const
 {
 	T max = node->data;
 	while (node->right)
@@ -56,64 +28,154 @@ template <class T> Node<T>* Tree<T>::findMaxNode(const Node<T> &node) const
 	return node;
 }
 
-//count subtrees by finding the difference between the node data and right node->data and left node->data
-//if right side has smaller amount of subtrees, get max in left, else, get min in right
 
-template <class T> Node<T> Tree<T>::m_delete(const Node<T> &n, const T d)
+template <class T> node<T> &node<T>::operator=(node const &n) 
 {
-	if (!root)
-		return n;
-	else if (d < n->data)
-		n->left = m_delete(n->left, d);
-	else if (d > n->data)
-		n->right = m_delete(n->right, d);
-	else
-	{
-		if (n->left == nullptr && n->right == nullptr)
-		{
-			delete n;
-			n = nullptr;
-		}
-		else if (root->left == nullptr)
-		{
-			Node<T> *temp = n;
-			n = n->right;
-			delete temp;
-		}
-		else if (root->right == nullptr)
-		{
-			Node<T> *temp = n;
-			n = n->left;
-			delete temp;
-		}
-		else 
-		{
-			Node<T> *temp;
-			if ((d - temp->left->data) < (temp->right->data - d))
-				temp = findMaxNode(temp->right);
-			else
-				temp = findMinNode(temp->left);
-			n->data = temp->data;
-			n->right = m_delete(n->right, temp->data);
-		}
-	}
-	return n;
+	delete left;
+	delete right;
+	data = n.data;
+	left = n.left ? new node(*n.left) : nullptr;
+	right = n.right ? new node(*n.right) : nullptr;
+	return (*this);
 }
 
-// can be rewritten, pretty inefficient however no time due to finals.
-template <class T> Tree<T> &Tree<T>::operator-=(const T value)
+template <class T> node<T> &node<T>::operator+=(const T value)
 {
-	root = m_delete(root,value);
+	node<T> **side = value < data ? &left: &right;
+	if (*side)
+		**side += value;
+	else
+		*side = new node<T>(value);
 	return (*this);
+}
+
+template<class T> node<T>* node<T>::operator-=(const T d)
+{
+	if (d < data && left)
+	{
+		left = *left -= d;
+		return this;
+	}
+	else if (d > data && right)
+	{
+		right = *right -= d;
+		return this;
+	}
+	if (d == data && !(left) && !(right))
+	{
+		delete this;
+		return nullptr;
+	}
+	else if (d == data && left && !(right))
+	{
+		const node<T> *temp = left;
+		left = nullptr;
+		*this = *temp;
+		temp->left = nullptr;
+		temp->right = nullptr;
+		delete temp;
+		return this;
+	}
+	else if (d == data && !(left) && right)
+	{
+		const node<T> *temp = right;
+		right = nullptr;
+		*this = *temp;
+		temp->left = nullptr;
+		temp->right = nullptr;
+		delete temp;
+		return this;
+	}
+	else if (d == data && left && right)
+	{
+		node<T> *temp;
+		if ((d - this->left->data) < (this->right->data - d))
+		{
+			temp = findMaxnode(temp->left);
+			data = temp->data;
+			right = (*right) -= d;
+		}
+		else
+		{
+			temp = findMinnode(temp->right)
+			data = temp->data;
+			left = (*left) -= d;
+		}
+	}
+	else
+	{
+		return this;
+	}
+}
+
+
+template <class T> tree<T> &tree<T>::operator+=(const T d)
+{
+	if (root)
+		*root += d;
+	else
+		root = new node<T>(d);
+	return (*this);
+}
+
+
+// NOTE TO SELF FOR OPTIMIZATION
+//count subtrees by finding the difference between the node data and right node->data and left node->data
+//depending on the difference, get max in left, else, get min in right
+
+template <class T> tree<T> &tree<T>::operator-=(const T d)
+{
+	root = *root -= d;
+	return (*this);
+	/*
+	Another implementation with m_delete(const Node<T> n, const T d) which deletes the node recursively.
+		if (!root)
+			return n;
+		else if (d < n->data && left)
+			n->left = m_delete(n->left, d);
+		else if (d > n->data && right)
+			n->right = m_delete(n->right, d);
+		else
+		{
+			if (!(n->left) && !(n->right))
+			{
+				delete n;
+				n = nullptr;
+			}
+			else if (root->left == nullptr)
+			{
+				node<T> *temp = n;
+				n = n->right;
+				delete temp;
+			}
+			else if (root->right == nullptr)
+			{
+				node<T> *temp = n;
+				n = n->left;
+				delete temp;
+			}
+			else
+			{
+				node<T> *temp;
+				if ((d - temp->left->data) < (temp->right->data - d))
+					temp = findMaxnode(temp->right);
+				else
+					temp = findMinnode(temp->left);
+				n->data = temp->data;
+				n->right = m_delete(n->right, temp->data);
+			}
+		}
+		return n;
+	*/
 
 	/*
-	This is the first code that I've written. However, after spending some time, I've added another implemention which is cleaner and deletes recursively. 
+	This is the first code that I've written. However, after spending some time, I've added another implemention which is cleaner and deletes recursively. But does it using another function.
 
 	if (!root)
 		return (*this);
 
-	Node<T> *temp = root->data < value ? root->right : root->left;
-	Node<T> *parentNode = temp;
+	node<T> *temp = root->data < value ? root->right : root->left;
+	node<T> *parentnode = temp;
 	while (value != temp->data)
 	{
 		if (temp->left == nullptr && temp->right == nullptr)
@@ -126,7 +188,7 @@ template <class T> Tree<T> &Tree<T>::operator-=(const T value)
 				return (*this);
 			else
 			{
-				parentNode = temp;
+				parentnode = temp;
 				temp = temp->left;
 			}
 		}
@@ -136,7 +198,7 @@ template <class T> Tree<T> &Tree<T>::operator-=(const T value)
 				return (*this);
 			else
 			{
-				parentNode = temp;
+				parentnode = temp;
 				temp = temp->right;
 			}
 		}
@@ -148,25 +210,25 @@ template <class T> Tree<T> &Tree<T>::operator-=(const T value)
 	}	
 	else if (temp->left == nullptr && temp->right)
 	{
-		if (temp->data >= parentNode->data)
-			parentNode->right = temp->right;
+		if (temp->data >= parentnode->data)
+			parentnode->right = temp->right;
 		else
-			parentNode->left = temp->right;
+			parentnode->left = temp->right;
 	}
 	else if (temp->right == nullptr && temp->left)
 	{
-		if (temp->data >= parentNode->data)
-			parentNode->right = temp->right;
+		if (temp->data >= parentnode->data)
+			parentnode->right = temp->right;
 		else
-			parentNode->left = temp->right;
+			parentnode->left = temp->right;
 	}
 	else
 	{
-		Node<T> *replacement;
+		node<T> *replacement;
 		if ((value - temp->left->data) < (temp->right->data - value))
-			replacement = findMaxNode(temp->right);
+			replacement = findMaxnode(temp->right);
 		else
-			replacement = findMinNode(temp->left);
+			replacement = findMinnode(temp->left);
 		temp->data = replacement->data;
 		delete replacement;
 	}
@@ -174,9 +236,9 @@ template <class T> Tree<T> &Tree<T>::operator-=(const T value)
 	*/
 }
 
-template <class T> T Tree<T>::biggest() const
+template <class T> T tree<T>::biggest() const
 {
-	Node<T> *temp = root;
+	node<T> *temp = root;
 	T max = root->data;
 	while (temp->right)
 	{
@@ -185,4 +247,5 @@ template <class T> T Tree<T>::biggest() const
 	return temp->data;
 }
 
-template class Node<long long>;
+template class node<long long>;
+template class tree<long long>;

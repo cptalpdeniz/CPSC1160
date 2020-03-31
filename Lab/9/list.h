@@ -18,7 +18,6 @@ template <class T> class list
 {
 	node<T>* head;
 	node<T>* tail;
-	node<T>* valueFind(T) const;
 
 public:
 	list() : head(nullptr), tail(nullptr) { }
