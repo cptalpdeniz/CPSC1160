@@ -19,15 +19,16 @@ template <class T> list<T>::list(const list& l)
 
 template <class T> list<T>& list<T>::operator=(const list &l)
 {
+	node<T> *temp = l.head;
 	delete head;
-	head = new node<T>(l.head->data, nullptr, nullptr);
+	head = new node<T>(temp->data, nullptr, nullptr);
 	tail = head;
-	l.head = l.head->next;
-	while (l.head)
+	temp = temp->next;
+	while (temp)
 	{
-		tail->next = new node<T>(l.head->data, nullptr, tail);
+		tail->next = new node<T>(temp->data, nullptr, tail);
 		tail = tail->next;
-		l.head = l.head->next;
+		temp = temp->next;
 	}
 	return (*this);
 }
@@ -72,7 +73,7 @@ template <class T> list<T>& list<T>::operator-=(const T d)
 template <class T> T list<T>::biggest() const
 {
 	if (!head)
-		return nullptr;
+		return 0;
 	else
 	{
 		node<T>* temp = head;
