@@ -1,5 +1,11 @@
 #include "list.h"
 
+template <class T, class V> node<T, V>::~node()
+{  
+	if (!next)
+		delete next; 
+}
+
 template <class T, class V> node<T, V>::node(node<T, V> const &n)
 {
 	(*this) = n;
@@ -116,6 +122,7 @@ template <class T> T list<T>::biggest() const
 			TVar = temp->data;
 		temp = temp->next;
 	}
+	return TVar;
 }
 
 template class node<long long, list <long long>> ;

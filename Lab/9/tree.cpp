@@ -59,14 +59,14 @@ template<class T> Node<T>* Node<T>::operator-=(const T d)
 		right = *right -= d;
 		return this;
 	}
-	if (d == data && !(left) && !(right))
+	if (d == data && !left && !right) //leaf
 	{
 		delete this;
 		return nullptr;
 	}
-	else if (d == data && left && !(right))
+	else if (d == data && left && !right) // single
 	{
-		Node<T> *temp = left;
+		Node<T>* const temp = left;
 		left = nullptr;
 		*this = *temp;
 		temp->left = nullptr;
@@ -74,9 +74,9 @@ template<class T> Node<T>* Node<T>::operator-=(const T d)
 		delete temp;
 		return this;
 	}
-	else if (d == data && !(left) && right)
+	else if (d == data && !left && right) //single
 	{
-		Node<T> *temp = right;
+		Node<T>* const temp = right;
 		right = nullptr;
 		*this = *temp;
 		temp->left = nullptr;
@@ -84,20 +84,28 @@ template<class T> Node<T>* Node<T>::operator-=(const T d)
 		delete temp;
 		return this;
 	}
-	else if (d == data && left && right)
+	else if (d == data && left && right) // 2 child
 	{
 		Node<T> *temp = this;
+		T TVar;
+
 		if ((d - temp->left->data) < (temp->right->data - d))
 		{
 			temp = findMaxNode(temp->left);
+			TVar = data;
 			data = temp->data;
-			right = (*right) -= d;
+			temp->data = TVar;
+			this->left = (*left -= d);
+			return this;
 		}
 		else
 		{
 			temp = findMinNode(temp->right);
+			TVar = data;
 			data = temp->data;
-			left = (*left) -= d;
+			temp->data = TVar;
+			this->right = (*right -= d);
+			return this;
 		}
 	}
 	else
@@ -109,7 +117,6 @@ template<class T> Node<T>* Node<T>::operator-=(const T d)
 template <class T> T Node<T>::biggest() const
 {
 	const Node<T> *temp = this;
-	T max = temp->data;
 	while (temp->right)
 	{
 		temp = temp->right;

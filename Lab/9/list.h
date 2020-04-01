@@ -8,7 +8,7 @@ template <class T, class V> class node
 	friend V;
 public:
 	node(T data = 0, node<T, V>* p = nullptr, node<T, V>* n = nullptr) : data(data), previous(p), next(n) { }
-	~node() {  delete next; }
+	~node();
 
 	node(node<T, V> const &);
 	node<T, V> &operator=(node const &);
