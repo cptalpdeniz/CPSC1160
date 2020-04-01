@@ -1,31 +1,33 @@
 #ifndef LIST_H
 #define LIST_H 
 
-template <class T> class node
+template <class T, class V> class node
 {
 	T data;
-	node<T> *previous, *next;
+	node<T, V> *previous, *next;
+	friend V;
 public:
-	node(T data = 0, node<T>* p = nullptr, node<T>* n = nullptr) : data(data), previous(p), next(n) { }
-	~node() { delete previous; delete next; }
+	node(T data = 0, node<T, V>* p = nullptr, node<T, V>* n = nullptr) : data(data), previous(p), next(n) { }
+	~node();
 
-	//still can't understand why we need these in linked list?
-	node(node<T> const &);
-	node<T> &operator=(node const &);
+	node(node<T, V> const &);
+	node<T, V> &operator=(node const &);
+	node<T, V> &operator+=(const T);
+	node<T, V> &operator-=(const T);
+
 };
 
 template <class T> class list
 {
-	node<T>* head;
-	node<T>* tail;
-	node<T>* valueFind(T) const;
+	node<T, list<T>>* head;
+	node<T, list<T>>* tail;
 
 public:
 	list() : head(nullptr), tail(nullptr) { }
 	
-	~list() { delete head; delete tail; }
-	list(const list&);
-	list &operator=(const list &);
+	~list() { delete head; }
+	list(const list<T> &);
+	list &operator=(const list<T> &);
 
 	list &operator+=(const T);
 	list &operator-=(const T);

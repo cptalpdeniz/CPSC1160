@@ -1,5 +1,5 @@
 #include "list.h"	// you should make a List.h for a linked-List implementation
-#include "tree.h"	// you should make a Tree.h for a BST implementation
+#include "tree.h"	// you should make a tree.h for a BST implementation
 #include <iostream>
 #include <chrono>
 
@@ -7,14 +7,14 @@
  * Include one of the following 3 include-lines for testing. You
  * should probably start with the smallest one
  */
-//#include "100000-50000.h"
-//#include "10000-5000.h"
-//#include "1000-500.h"
-#include "10-5.h"
+ #include "100000-50000.h"
+ //#include "10000-5000.h"
+ //#include "1000-500.h"
+//#include "10-5.h"
 
 static unsigned long long current_millis()
 {
-	// code stolen from https://stackoverflow.com/a/56107709
+	// code from https://stackoverflow.com/a/56107709
 	using namespace std::chrono;
 	return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 }
@@ -36,8 +36,8 @@ template <class T> static void time_data_structure()
 
 int main()
 {
-	std::cout << "Tree: ";
-	time_data_structure<Tree<long long>>();
+	std::cout << "tree: ";
+	time_data_structure<tree<long long>>();
 	std::cout << "List: ";
 	time_data_structure<list<long long>>();
 	return 0;
